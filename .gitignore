@@ -103,6 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# ADDED
+# ADDED SC
 /data
 /etl/.idea
+
+# ADDED MD
+.DS_Store
