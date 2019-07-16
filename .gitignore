@@ -106,6 +106,7 @@ venv.bak/
 # ADDED SC
 /data
 /etl/.idea
+/etl/*.pkl
 
 # ADDED MD
 .DS_Store
