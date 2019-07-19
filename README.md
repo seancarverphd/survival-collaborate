@@ -13,3 +13,4 @@ Note: To run the code, you'll need the data, which are too big to place in a Git
 7. Takes hours, can skip: Close all jupyter notebooks and open and run the jupyter notebook combine.ipynb
 8. combine.ipynb will produce two files k6.savepkl and k9.savepkl.  These are in repository under ./etl
 9. Close all jupyter notebooks and Switch to ./analysis and run the jupyter notebook calc_pvalues.ipynb
+10. link to the presentation https://prezi.com/view/fL4qT4fdPz2KdBWE1euK/
