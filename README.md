@@ -8,13 +8,19 @@ We obtained data from Kaggle.com.  The data consisted of all death
 records (with identifying information redacted) from 2005 to 2015.  We
 used the data for 2006 (a boom year) and 2009 (a bust year, during the
 Great Recession).  We looked at causes of death.  Many decedents had
-several causes assigned to them.  We used a binomial model which
-assumed that each decedent had the same independent probability of
-dying and performed inference for this probability.  There were over
-5,000 comparisons so we used a Bonferroni correction.  Using an alpha
-of 0.0001 (before the correction) and a two-sided alternative we found
-104 signficant results where the death proportion was greater in 2009
-than 2006.
+several causes assigned to them.  For each cause, we used a binomial
+model which assumed that each decedent had the same independent
+probability of dying.  We performed inference for this probability,
+testing the null hypothesis that the death probabilities were the
+same.  There were over 5,000 comparisons so we used a Bonferroni
+correction.  Our sample sizes (equal to the US population in 2006 and
+2009) were enormous (appox. 300 M).  Using an alpha of 0.0001 (before
+the correction) and a two-sided alternative we found 104 signficant
+results where the death proportion was greater in 2009 than 2006.  We
+ranked these by Cohen's h (effect size for probabilities) and studied
+the top 10, shown here.
+
+![](fig/causes_and_explanations.png)
 
 1. Download Death in the United States data from this link: https://www.kaggle.com/cdc/mortality/downloads/mortality.zip/2 
 2. If this repository is in ./ then extract the data into ./data/
