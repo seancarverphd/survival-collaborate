@@ -43,7 +43,10 @@ not find images of such a plot nor software to do it.
 
 We plotted this p-value violins against two from the uniform distribution which we would expect
 if all of our null hypotheses were correct.  The image suggests that many of them are not as
-revealed by our tests.
+revealed by our tests.  The figure also reveals the problem with using alpha=0.05 instead of applying
+a Bonferroni correction.  If all of our null hypotheses were correct we would expect that 
+about 5% of our p-value would be less than 0.05.  If the number of tests is large, that's a lot 
+of significance when there should be none.
 
 ![](fig/violins.png)
 
