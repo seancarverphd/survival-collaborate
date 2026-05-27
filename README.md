@@ -1,68 +1,96 @@
 # survival-collaborate
-Collaboratative Repo For Analyzing Death and Survival During Great Recession
-Collaborators: Moussa Doumbia and Sean Carver
 
-Note: To run the code, you'll need the data, which are too big to place in a GitHub Repo.  
-See instructions below.
+**Collaborators:** Sean Carver (PhD, Applied Mathematics, Cornell) and Moussa Doumbia
 
-We obtained data from Kaggle.com.  The data consisted of all death
-records (with identifying information redacted) from 2005 to 2015.  We
-used the data for 2006 (a boom year) and 2009 (a bust year, during the
-Great Recession).  We looked at causes of death.  Many decedents had
-several causes assigned to them.  For each cause, we used a binomial
-model which assumed that each decedent had the same independent
-probability of dying.  We performed inference for this probability,
-testing the null hypothesis that the death probabilities were the
-same (two-sample z-test for proportions, removing causes for which there were
-fewer than 10 decedents, as required by the conditions of this test).
-There were over 2,000 comparisons so we used a Bonferroni
-correction.  Our sample sizes (equal to the US population in 2006 and
-2009) were enormous (appox. 300 M).  Using an alpha of 0.0001 (before
-the correction) and a two-sided alternative we found 104 signficant
-results where the death proportion was greater in 2009 than 2006.  We
-ranked these by Cohen's h (effect size for probabilities) and studied
-the top 10, shown here.
+*Completed in 2019 while attending the Flatiron School Data Science program, during a transition from academic research into applied data science.*
 
-![](fig/causes_and_explanations.png)
+---
 
-The biggest challenge we faced was finding this mapping between codes and
-their explanations.  Most sources online had only the first two digits which
-gave the category of cause.  The source we found for three digits concerned
-diagnostic codes for living people which shared many of the same codes.  We found 
-reference for the death codes, but lacked the time to find it in the library.  That
-is fodder for future studies.
+## Project Summary
 
-We plotted a slope graph for the top 6 causes.  See the figure above for the explanations.
-Although slope graph is a common plot with many hits on Google, we were not happy with the
-software for creating it, although with effort we made due.
+This project investigates whether the causes of death in the United States shifted significantly during the Great Recession. Using CDC mortality data covering all US death records from 2005–2015, we compare the proportional distribution of causes of death between 2006 (a pre-recession boom year) and 2009 (the recession trough), across more than 2,000 cause-of-death codes.
 
-![](fig/slope_graph.png)
+The project demonstrates an end-to-end data pipeline: ingesting and trimming large-scale public health data, ETL processing into analysis-ready datasets, rigorous statistical testing with multiple-comparison correction, and publication-quality visualization of results.
 
-Finally, we plotted the p-values as a violin plot.  We had a similar plot in mind, one 
-that would have looked like a violin plot but would bin like histogram, but we could 
-not find images of such a plot nor software to do it.
+---
 
-We plotted this p-value violins against two from the uniform distribution which we would expect
-if all of our null hypotheses were correct.  The image suggests that many of them are not as
-revealed by our tests.  The figure also reveals the problem with using alpha=0.05 instead of applying
-a Bonferroni correction.  If all of our null hypotheses were correct we would expect that 
-about 5% of our p-value would be less than 0.05.  If the number of tests is large, that's a lot 
-of significance when there should be none.
+## Skills and Tools Demonstrated
 
-![](fig/violins.png)
+- **Data wrangling at scale:** Multi-step ETL pipeline in Jupyter/Python (pandas) to trim, transform, and combine large CDC mortality files that exceed memory limits if processed naively
+- **Statistical rigor:** Binomial model, two-sample z-test for proportions, Bonferroni correction across 2,000+ simultaneous comparisons, Cohen's h effect-size ranking
+- **Data quality:** Consistency checks (`explore_consistency.ipynb`), data validation notebooks, and intermediate serialized outputs (`.savepkl`) to ensure pipeline reproducibility
+- **Visualization:** Slope graphs for top causes; violin plots of p-value distributions to assess significance patterns vs. a null uniform distribution
+- **Collaboration:** Two-contributor repo with 54 commits and structured folder organization (etl / analysis / fig)
+- **Languages / tools:** Python, pandas, Jupyter Notebook, pickle serialization, CDC public data (via Kaggle)
 
-Here is a link to the presentation we gave: https://prezi.com/view/fL4qT4fdPz2KdBWE1euK/
+---
 
-Here are the instructions for running the Jupyter notebooks.  They are spread out in many 
-files because we needed to close them to clear data before running the next to avoid 
-memory issues.
+## Key Findings
 
-1. Download Death in the United States data from this link: https://www.kaggle.com/cdc/mortality/downloads/mortality.zip/2 
-2. If this README.md is in ./ then extract the data into ./data/
-3. Switch to ./etl and open and run the jupyter notebook trim2006.ipynb       
-4. Close all jupyter notebooks and open and run the jupyter notebook trim2009.ipynb
-5. Close all jupyter notebooks and open and run the jupyter notebook etl2006.ipynb
-6. Close all jupyter notebooks and open and run the jupyter notebook etl2009.ipynb
-7. Takes hours, can skip: Close all jupyter notebooks and open and run the jupyter notebook combine.ipynb
-8. combine.ipynb will produce two files k6.savepkl and k9.savepkl.  These are in repository under ./etl
-9. Close all jupyter notebooks and Switch to ./analysis and run the jupyter notebook calc_pvalues.ipynb
+- Identified **104 cause-of-death categories** where the proportion of deaths was significantly higher in 2009 than in 2006 (Bonferroni-corrected alpha = 0.0001, two-sided).
+- Results were ranked by **Cohen's h** (effect size for proportions) to prioritize practically meaningful differences over purely statistically significant ones.
+- Violin plots of raw p-values confirmed the necessity of multiple-comparison correction, illustrating how many false positives would arise without it.
+
+---
+
+## Repository Structure
+
+```
+survival-collaborate/
+├── etl/                           # Data ingestion, trimming, and transformation
+│   ├── trim2006.ipynb             # Trim raw 2006 mortality file to manageable size
+│   ├── trim2009.ipynb             # Trim raw 2009 mortality file
+│   ├── etl2006.ipynb              # ETL: extract and encode 2006 cause-of-death data
+│   ├── etl2009.ipynb              # ETL: extract and encode 2009 cause-of-death data
+│   ├── combine.ipynb              # Merge 2006 and 2009 into unified analysis dataset
+│   ├── explore_consistency.ipynb  # Data quality and consistency checks
+│   ├── explore_csv.ipynb          # Exploratory CSV inspection
+│   ├── k6.savepkl                 # Serialized 2006 dataset (provided)
+│   └── k9.savepkl                 # Serialized 2009 dataset (provided)
+├── analysis/
+│   └── calc_pvalues.ipynb         # Hypothesis testing, effect sizes, visualization
+├── fig/                           # Output figures
+└── README.md
+```
+
+---
+
+## Data
+
+**Source:** CDC Mortality Data, "Death in the United States" (2005–2015), obtained via [Kaggle](https://www.kaggle.com/cdc/mortality/downloads/mortality.zip/2).  
+The dataset contains all US death records with identifying information redacted.  
+**Years used:** 2006 (n ≈ 300M population, boom year) and 2009 (n ≈ 300M, recession year).
+
+> **Note:** Raw data files are too large for GitHub. Download and extract `mortality.zip` into `./data/` before running the ETL notebooks.
+
+---
+
+## How to Reproduce
+
+**Step 1 — Download data**
+```bash
+# Download from Kaggle (requires free Kaggle account):
+# https://www.kaggle.com/cdc/mortality/downloads/mortality.zip/2
+# Extract into ./data/
+```
+
+**Step 2 — Run ETL** (in order, closing each notebook before opening the next to manage memory)
+```
+etl/trim2006.ipynb
+etl/trim2009.ipynb
+etl/etl2006.ipynb
+etl/etl2009.ipynb
+etl/combine.ipynb        <- optional; pre-built outputs k6.savepkl / k9.savepkl are provided
+```
+
+**Step 3 — Run analysis**
+```
+analysis/calc_pvalues.ipynb
+```
+
+---
+
+## Presentation
+
+A project presentation is available here:  
+[https://prezi.com/view/fL4qT4fdPz2KdBWE1euK/](https://prezi.com/view/fL4qT4fdPz2KdBWE1euK/)
