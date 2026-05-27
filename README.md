@@ -94,3 +94,6 @@ analysis/calc_pvalues.ipynb
 
 A project presentation is available here:  
 [https://prezi.com/view/fL4qT4fdPz2KdBWE1euK/](https://prezi.com/view/fL4qT4fdPz2KdBWE1euK/)
+
+
+*Note: The presentation was delivered by Moussa Doumbia. Sean Carver designed and conducted the core analysis.*
